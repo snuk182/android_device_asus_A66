@@ -18,7 +18,6 @@ bin/hci_qcomm_init
 #
 # Camera
 #
-lib/hw/camera.msm8960.so:lib/hw/vendor-camera.msm8960.so
 lib/hw/camera.qcom.so:lib/hw/vendor-camera.qcom.so
 lib/libcamera_clientsemc.so
 lib/libcameralight.so
@@ -251,6 +250,11 @@ etc/firmware/q6.b06
 etc/firmware/q6.mdt
 
 #
+# QCOM JS
+#
+vendor/lib/libv8.so
+
+#
 # QMI
 #
 lib/libqmi.so
@@ -320,12 +324,6 @@ lib/libmiscta.so
 lib/libta.so
 
 #
-# Time
-#
-bin/time_daemon
-lib/libtime_genoff.so
-
-#
 # Touchscreen
 #
 etc/firmware/touch_module_id_0x32.img
@@ -376,5 +374,4 @@ lib/libmlplatform.so
 lib/libmm-color-convertor.so
 lib/libmpl.so
 lib/libnl.so
-lib/libsysmon_idd.so
 lib/libxml.so
