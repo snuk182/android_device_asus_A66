@@ -229,11 +229,6 @@ etc/firmware/modem_f2.mdt:etc/firmware/modem_fw.mdt
 lib/hw/nfc.msm8960.so
 
 #
-# Post Processing
-#
-bin/mm-pp-daemon
-
-#
 # Protocol Buffers
 #
 lib/libprotobuf-c.so
