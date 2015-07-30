@@ -1,0 +1,26 @@
+# mount point	fstype    device    	[device2]
+
+modem       fat16       /dev/block/mmcblk0p1
+sbl1        emmc        /dev/block/mmcblk0p2
+sbl2        emmc        /dev/block/mmcblk0p3
+sbl3        emmc        /dev/block/mmcblk0p4
+aboot       emmc        /dev/block/mmcblk0p5
+rpm         emmc        /dev/block/mmcblk0p6
+tz          emmc        /dev/block/mmcblk0p8
+pad         emmc        /dev/block/mmcblk0p9
+modemst1    emmc        /dev/block/mmcblk0p10
+modemst2    emmc        /dev/block/mmcblk0p11
+asusdata    ext2        /dev/block/mmcblk0p12
+asuskey     emmc        /dev/block/mmcblk0p13
+fsg         emmc        /dev/block/mmcblk0p19
+ssd         emmc        /dev/block/mmcblk0p20
+
+/boot       emmc        /dev/block/mmcblk0p7
+/persist    ext4        /dev/block/mmcblk0p14
+/recovery   emmc        /dev/block/mmcblk0p15
+/cache      ext4        /dev/block/mmcblk0p16
+/misc       emmc        /dev/block/mmcblk0p17
+/tombstones ext4        /dev/block/mmcblk0p18
+/system     ext4        /dev/block/mmcblk0p21
+/gmxt       ext2        /dev/block/mmcblk0p22
+/data       ext4        /dev/block/mmcblk0p23

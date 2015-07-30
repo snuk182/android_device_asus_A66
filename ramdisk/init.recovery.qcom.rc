@@ -1,0 +1,8 @@
+# ADB in Recovery
+service adbd /sbin/adbd recovery
+    disabled
+    socket adbd stream 660 system system
+
+    write /sys/class/android_usb/android0/enable 0
+    start adbd
+    write /sys/class/android_usb/android0/enable 1

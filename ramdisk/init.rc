@@ -1,0 +1,16 @@
+# Copyright (C) 2012 The Android Open Source Project
+#
+# IMPORTANT: Do not create world writable files or directories.
+# This is a common source of Android security bugs.
+#
+
+# ADB in Recovery
+service adbd /sbin/adbd recovery
+    disabled
+    socket adbd stream 660 system system
+
+    write /sys/class/android_usb/android0/enable 0
+    start adbd
+    write /sys/class/android_usb/android0/enable 1
+
+

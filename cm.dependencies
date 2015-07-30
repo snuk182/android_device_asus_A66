@@ -1,0 +1,6 @@
+[
+  {
+    "repository": "omnirom/android_hardware_qcom_display-legacy",
+    "target_path": "hardware/qcom/display-legacy"
+  }
+]
