@@ -50,7 +50,7 @@ on fs
 on boot
    write /sys/devices/i2c-3/3-0024/cyttsp_update_fw 1
    write /sys/devices/i2c-3/3-005b/update_fw 1
-   start qcamerasvr
+#   start qcamerasvr
 
 #ASUS_BSP +++ Louis
     chown system system /sys/devices/virtual/sensors/psensor/switch
@@ -103,10 +103,10 @@ on post-fs-data
 #ASUS_BSP --- Jason Chang "for compass calibration data"
 
 #start camera server as daemon
-service qcamerasvr /system/bin/mm-qcamera-daemon
-        class late_start
-        user camera
-        group camera system inet input graphics
+#service qcamerasvr /system/bin/mm-qcamera-daemon
+#        class late_start
+#        user camera
+#        group camera system inet input graphics
 
 # ++ ASUS_BSP: miniporting: prevent the non-HLOS block the system
 #start GNSS/Sensor interface daemon

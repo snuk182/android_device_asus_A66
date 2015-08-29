@@ -144,3 +144,94 @@ on property:sys.asus.evtlog=1
 on property:sys.asus.evtlog=0
     start asusevtlog
 #ASUS_BSP --- Allen1_Huang
+
+#Instant Dictionary ++
+service screendict /system/bin/asusscreendict
+# ASUS_BSP +++ Josh_Liao "encrypt phone"
+	class late_start
+# ASUS_BSP --- Josh_Liao "encrypt phone"
+	user system
+	oneshot
+#Instant Dictionary --
+
+# ASUS_BSP+++ BennyCheng "add persist.sys.usb.otg.mode property to switch usb host/client mode for apk use"
+on property:persist.sys.usb.otg.mode=host
+write /proc/msm_otg/mode host
+
+on property:persist.sys.usb.otg.mode=peripheral
+write /proc/msm_otg/mode peripheral
+
+on property:persist.sys.usb.otg.mode=auto
+write /proc/msm_otg/mode auto
+# ASUS_BSP--- BennyCheng "add persist.sys.usb.otg.mode property to switch usb host/client mode for apk use"
+
+# ASUS_BSP+++ Victor "disable power off dialog for special version"
+setprop persist.sys.test.poweronoff true
+# ASUS_BSP--- Victor "disable power off dialog for special version"
+
+#CR++ trigger mpdecision when property is modified
+service onMpdChanged /system/bin/onMPDecision.sh
+    class core
+    user root
+    oneshot
+    disabled
+
+on property:persist.sys.powersaving.mpdmode=*
+    start onMpdChanged
+#CR++
+
+on early-init
+# ASUS_BSP+++ BennyCheng "create Removable directory for mounting usb storages"
+    mkdir /Removable 0755 media_rw media_rw
+# ASUS_BSP--- BennyCheng "create Removable directory for mounting usb storages"
+
+on init
+# ASUS_BSP+++ BennyCheng "create Removable directory for mounting usb storages"
+    mount tmpfs tmpfs /Removable mode=0755,gid=1000
+# ASUS_BSP--- BennyCheng "create Removable directory for mounting usb storages"
+
+#+++ ASUS_BSP : add for unlock function
+chown root system /dev/block/mmcblk0p13
+chmod 660 /dev/block/mmcblk0p13
+#--- ASUS_BSP : add for unlock function
+
+on post-fs-data
+    # joe1 "change path for ATD test"
+    symlink /sys/devices/platform/hdmi_msm.1/hdmi_status /data/data/hdmi_status
+
+# ASUS_BSP +++ SinaChou  "create link for Microp Firmware Update APP"
+    symlink /sys/devices/i2c-10/10-0015/pad_update_progress /data/pad_update_progress
+    symlink /sys/devices/i2c-10/10-0015/dock_hallsensor_status /data/data/dock_hallsensor_status
+    symlink /sys/devices/i2c-10/10-0015/pad_proximity_sensor_status /data/data/pad_proximity_sensor_status
+# ASUS_BSP ---
+
+    # ASUS_BSP+++ Eason_Chang BalanceMode
+    chown system system /proc/driver/balanceChg
+    # ASUS_BSP--- Eason_Chang BalanceMode
+
+
+on boot
+# ASUS_BSP+++ Peter_lu "Add for fastboot "
+    chown radio system /sys/power/fastboot
+    chmod 0660 /sys/power/fastboot
+    chown radio system /sys/power/fastboot_wakeup
+    chmod 0660 /sys/power/fastboot_wakeup
+# ASUS_BSP--- Peter_lu "Add for fastboot "
+
+    class_start core
+# ASUS_BSP +++ Josh_Liao "encrypt phone"
+    start qcom-wifi
+# ASUS_BSP --- Josh_Liao "encrypt phone"
+    class_start main
+
+#+++ ASUS_BSP: Vic: dhcpcd service for ethernet
+service dhcpcd_eth0 /system/bin/dhcpcd -ABKL -f/system/etc/dhcpcd/dhcpcd.conf
+    class late_start
+    disabled
+    oneshot
+
+service iprenew_eth0 /system/bin/dhcpcd -n
+    class late_start
+    disabled
+    oneshot
+#--- ASUS_BSP: Vic: dhcpcd service for ethernet

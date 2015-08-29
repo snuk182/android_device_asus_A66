@@ -39,13 +39,24 @@ on init
     # Set permissions for persist partition
     mkdir /persist 0771 system system
 
+	mkdir /mnt/shell/emulated 0700 shell shell
+	mkdir /storage/emulated 0555 root root
+
+	export EXTERNAL_STORAGE /storage/emulated/legacy
+	export EMULATED_STORAGE_SOURCE /mnt/shell/emulated
+	export EMULATED_STORAGE_TARGET /storage/emulated
+	
+	symlink /storage/emulated/legacy /sdcard
+	symlink /storage/emulated/legacy /mnt/sdcard
+	symlink /storage/emulated/legacy /storage/sdcard0
+	symlink /mnt/shell/emulated/0 /storage/emulated/legacy
 on early-boot
     # set RLIMIT_MEMLOCK to 64MB
     setrlimit 8 67108864 67108864
 
 on early-init
     # for backwards compatibility
-    export EXTERNAL_STORAGE /storage/sdcard0
+    # export EXTERNAL_STORAGE /storage/sdcard0
 #ASUS_BSP+++ Josh_Liao "use fuse to share /data/media in MTP"
     #mkdir /storage 0050 system sdcard_r
     mkdir /storage 0775 root system
@@ -54,6 +65,10 @@ on early-init
     symlink /storage/sdcard0 /sdcard
     symlink /storage/sdcard0 /mnt/sdcard
 
+on fs
+    mount_all ./fstab.qcom
+    restorecon_recursive /persist
+    setprop ro.crypto.fuse_sdcard true
 
 on boot
     exec system/bin/btnvtool -O
@@ -258,6 +273,9 @@ on post-fs-data
 #   user root
 #   disabled
 #   oneshot
+
+on post-fs
+    symlink /etc/thermald-8960.conf /etc/thermald.conf
 
 on property:init.svc.surfaceflinger=stopped
     stop ppd
@@ -661,9 +679,9 @@ service profiler_daemon /system/bin/profiler_daemon
 
 #ASUS_BSP +++ Jimmy,Josh "remove fuse"
 #1015 means SDCARD_RW permission
-service sdcard /system/bin/sdcard /data/media 1023 1023
+service sdcard /system/bin/sdcard -u 1023 -g 1023 -l /data/media /mnt/shell/emulated
     class late_start
-    disabled
+
 
 #service sdcard /system/bin/sh init.asus.sdcard.sh
 #    user root
@@ -674,6 +692,9 @@ service sdcard /system/bin/sdcard /data/media 1023 1023
 #ASUS_BSP --- Jimmy,Josh "remove fuse"
 
 on property:ro.fuse_sdcard=true
+    start sdcard
+
+on property:ro.crypto.fuse_sdcard=true
     start sdcard
 
 #ASUS_BSP +++ Josh_Liao "emmc write test"
