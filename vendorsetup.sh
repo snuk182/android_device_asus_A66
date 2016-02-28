@@ -14,4 +14,5 @@
 # limitations under the License.
 #
 
-add_lunch_combo cm_A66-userdebug
+add_lunch_combo aosp_A66-userdebug
+add_lunch_combo omni_A66-userdebug

@@ -1,2 +1,0 @@
-allow qmuxd shell_exec:file { open read execute execute_no_trans };
-allow qmuxd sysfs_wake_lock:file { open read write };
