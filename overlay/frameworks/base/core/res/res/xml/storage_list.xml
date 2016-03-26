@@ -20,20 +20,19 @@
 <!-- See storage config details at http://source.android.com/tech/storage/ -->
 
 <StorageList xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- removable is not set in nosdcard product -->
     <storage
 	android:emulated="true"
 	android:allowMassStorage="true"
 	android:primary="true"
         android:storageDescription="@string/storage_internal"
         android:mtpReserve="100" />
-    <storage
+<!--    <storage
         android:mountPoint="/storage/microsd"
 	android:allowMassStorage="true"
         android:storageDescription="@string/storage_sd_card"
         android:removable="true" />
     <storage
-        android:mountPoint="/storage/sdreader"
+        android:mountPoint="/storage/sd"
 	android:allowMassStorage="true"
         android:storageDescription="@string/storage_sd_card"
         android:removable="true" />
@@ -46,5 +45,5 @@
         android:mountPoint="/storage/usbdisk2"
 	android:allowMassStorage="true"
         android:storageDescription="@string/storage_usb"
-        android:removable="true" />
+        android:removable="true" />   -->
 </StorageList>
