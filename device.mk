@@ -105,7 +105,7 @@ PRODUCT_COPY_FILES += \
         device/asus/A66/prebuilt/usr/keylayout/Vendor_22b8_Product_093d.kl:system/usr/keylayout/Vendor_22b8_Product_093d.kl \
         device/asus/A66/prebuilt/usr/keylayout/Vendor_05ac_Product_0239.kl:system/usr/keylayout/Vendor_05ac_Product_0239.kl \
         device/asus/A66/prebuilt/usr/keylayout/cyttsp-i2c.kl:system/usr/keylayout/cyttsp-i2c.kl \
-        device/asus/A66/prebuilt/usr/keylayout/asusec.kl:system/usr/keylayout/cyttsp-i2c.kl \
+        device/asus/A66/prebuilt/usr/keylayout/asusec.kl:system/usr/keylayout/asusec.kl \
         device/asus/A66/prebuilt/usr/keylayout/atmel-maxtouch.kl:system/usr/keylayout/atmel-maxtouch.kl
 
 
@@ -284,9 +284,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
 	wpa_supplicant_overlay.conf \
 	p2p_supplicant_overlay.conf
-
-PRODUCT_PACKAGES += \
-	power.msm8960
 
 $(call inherit-product, frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk)
 $(call inherit-product, hardware/qcom/msm8960/msm8960.mk)
