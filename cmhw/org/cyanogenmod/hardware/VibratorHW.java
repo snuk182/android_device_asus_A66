@@ -29,18 +29,23 @@ public class VibratorHW {
     public static int getMaxIntensity()  {
         return 8;
     }
+
     public static int getMinIntensity()  {
         return 0;
     }
+
     public static int getWarningThreshold()  {
         return 6;
     }
+
     public static int getCurIntensity()  {
         return Integer.parseInt(FileUtils.readOneLine(LEVEL_PATH));
     }
+
     public static int getDefaultIntensity()  {
         return 5;
     }
+
     public static boolean setIntensity(int intensity)  {
         return FileUtils.writeLine(LEVEL_PATH, String.valueOf(intensity));
     }
