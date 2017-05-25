@@ -24,4 +24,4 @@ Camera  | 13MPx, LED Flash
 
 ![Sony Xperia T](http://cdn2.gsmarena.com/vv/pics/sony/sony-xperia-t.jpg "Sony Xperia T in black and in white")
 
-This branch is for building LineageOS 14.1 (or Android Nougat 7.1 AOSP based roms) ROMS.
+This branch is for building LineageOS 14.1 (or Android Nougat 7.1 AOSP based) ROMS.
