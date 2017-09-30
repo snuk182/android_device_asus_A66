@@ -13,18 +13,6 @@ fw=touch_module_id_0x32.img
 
 rmi4_fwloader -b /system/etc/firmware/$fw -d /sys/bus/rmi4/devices/sensor00 $flags
 
-# Audio jack configuration
-dev=/sys/devices/platform/msm_ssbi.0/pm8921-core/simple_remote_pf/simple_remote
-echo 0,301 > $dev/accessory_min_vals
-echo 300,1599 > $dev/accessory_max_vals
-echo 0,100,280,500 > $dev/button_min_vals
-echo 99,199,399,699 > $dev/button_max_vals
-echo 512 > $dev/btn_trig_period_freq  # Button Period Freq(Hz)
-echo 16 > $dev/btn_trig_period_time   # Button Period Time(Cycle)
-echo 512 > $dev/btn_trig_hyst_freq    # Button Hysteresis Freq(Hz)
-echo 16 > $dev/btn_trig_hyst_time     # Button Hysteresis Time(Cycle)
-echo 400 > $dev/btn_trig_level
-
 # Proximity sensor configuration
 dev=/sys/bus/i2c/devices/i2c-12/12-0054/
 val_cycle=0
