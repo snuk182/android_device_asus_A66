@@ -1,0 +1,13 @@
+type macaddrsetup, domain;
+type macaddrsetup_exec, exec_type, vendor_file_type, file_type;
+
+init_daemon_domain(macaddrsetup)
+
+unix_socket_connect(macaddrsetup, tad, tad)
+
+#============= macaddrsetup ==============
+allow macaddrsetup bluetooth_data_file:dir { add_name search write };
+allow macaddrsetup bluetooth_data_file:file { create getattr open setattr write };
+allow macaddrsetup self:capability { chown fowner fsetid };
+allow macaddrsetup sysfs_mac_serial:file { getattr open write };
+allow macaddrsetup sysfs_mac_address:file { getattr open write };

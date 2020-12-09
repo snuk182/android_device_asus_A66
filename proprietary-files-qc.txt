@@ -1,0 +1,197 @@
+# ADSP
+#lib/libadsprpc.so
+
+# Audio
+lib/libacdbloader.so
+
+# Bluetooth
+bin/hci_qcomm_init
+
+# Camera
+lib/libmmcamera_hdr_lib.so
+lib/libmmcamera_image_stab.so
+lib/libmmcamera_faceproc.so
+lib/libmmcamera_frameproc.so
+lib/libmmcamera_interface2.so
+lib/libmmcamera_statsproc31.so
+lib/libmmcamera_wavelet_lib.so
+bin/USB_Camera_update/FilePath.ini
+bin/USB_Camera_update/fw_update
+bin/USB_Camera_update/fw_update.sh
+bin/USB_Camera_update/USB_Camera_FW_20120224_ALL.bin
+etc/firmware/camera/A60K-RS-M6Mo.bin
+
+# Data
+bin/netmgrd
+lib/libdsi_netctrl.so
+lib/libdsutils.so
+lib/libnetmgr.so
+lib/libqdi.so
+lib/libqdp.so
+
+# Diag
+lib/libdiag.so
+
+# FM
+#bin/fm_qsoc_patches
+
+# GPS
+lib/hw/gps.default.so
+lib/libgps.utils.so
+lib/libloc_api_v02.so
+lib/libloc_adapter.so
+lib/libloc_ext.so
+lib/libloc_eng.so
+lib/libgeofence.so
+#vendor/lib/libizat_core.so
+#vendor/lib/liblbs_core.so
+
+# Graphics
+etc/firmware/a225p5_pm4.fw
+etc/firmware/a225_pfp.fw
+etc/firmware/a225_pm4.fw
+etc/firmware/a300_pfp.fw
+etc/firmware/a300_pm4.fw
+etc/firmware/leia_pfp_470.fw
+etc/firmware/leia_pm4_470.fw
+lib/egl/eglsubAndroid.so
+lib/egl/libEGL_adreno200.so
+lib/egl/libGLESv1_CM_adreno200.so
+lib/egl/libGLESv2_adreno200.so
+lib/egl/libGLESv2S3D_adreno200.so
+lib/egl/libq3dtools_adreno200.so
+lib/libC2D2.so
+#lib/libCB.so
+#vendor/lib/libadreno_utils.so
+lib/libc2d2_a3xx.so
+lib/libc2d2_z180.so
+lib/libgsl.so
+lib/libllvm-a3xx.so
+lib/libllvm-arm.so
+lib/libOpenCL.so
+lib/libOpenVG.so
+lib/libsc-a2xx.so
+lib/libsc-a3xx.so
+
+# MultiMedia
+lib/libgemini.so
+lib/libmmjpeg.so
+#lib/libmercury.so
+
+# Perf
+#lib/libthermalclient.so
+#vendor/lib/libqti-perfd-client.so
+
+# Protocol Buffers
+#lib/libprotobuf-c.so
+
+# QCRIL
+lib/libril-qc-qmi-1.so
+
+# QMI
+bin/irsc_util
+bin/qmuxd
+lib/libidl.so
+lib/libqcci_legacy.so
+lib/libqmi.so
+lib/libqmi_client_qmux.so
+lib/libqmiservices.so
+lib/libqmi_cci.so
+lib/libqmi_common_so.so
+lib/libqmi_csi.so
+lib/libqmi_csvt_srvc.so
+lib/libqmi_encdec.so
+
+# RemoteFS
+bin/rmt_storage
+
+# Security
+#bin/secchand
+#lib/lib_asb_tee.so
+lib/libQSEEComAPI.so
+#lib/libidd.so
+#lib/libkeyctrl.so
+#lib/libpin-cache.so
+#lib/libs1sl.so
+
+# STLport
+lib/libstlport.so
+
+# Time services
+#-vendor/lib/libtime_genoff.so
+-vendor/lib/libTimeService.so
+
+# UI
+#vendor/lib/libuiblur.so
+
+# VIDC firmware
+etc/firmware/vidc.b00
+etc/firmware/vidc.b01
+etc/firmware/vidc.b02
+etc/firmware/vidc.b03
+etc/firmware/vidc.mdt
+etc/firmware/vidc_1080p.fw
+etc/firmware/vidcfw.elf
+
+# Widevine DRM
+vendor/lib/drm/libdrmwvmplugin.so
+vendor/lib/libwvm.so
+vendor/lib/libwvdrm_L3.so
+vendor/lib/libWVStreamControlAPI_L3.so
+
+# WiFi Firmware
+#etc/firmware/wcnss.b00
+#etc/firmware/wcnss.b01
+#etc/firmware/wcnss.b02
+#etc/firmware/wcnss.b04
+#etc/firmware/wcnss.b05
+#etc/firmware/wcnss.mdt
+# Modem Firmware
+etc/firmware/modem.b00
+etc/firmware/modem.b01
+etc/firmware/modem.b02
+etc/firmware/modem.b03
+etc/firmware/modem.b04
+etc/firmware/modem.b06
+etc/firmware/modem.b07
+etc/firmware/modem.mdt
+etc/firmware/modem_f1.b00
+etc/firmware/modem_f1.b01
+etc/firmware/modem_f1.b02
+etc/firmware/modem_f1.b03
+etc/firmware/modem_f1.b04
+etc/firmware/modem_f1.b05
+etc/firmware/modem_f1.b06
+etc/firmware/modem_f1.b07
+etc/firmware/modem_f1.b08
+etc/firmware/modem_f1.b09
+etc/firmware/modem_f1.b10
+etc/firmware/modem_f1.b13
+etc/firmware/modem_f1.b14
+etc/firmware/modem_f1.b21
+etc/firmware/modem_f1.b22
+etc/firmware/modem_f1.b23
+etc/firmware/modem_f1.b25
+etc/firmware/modem_f1.b26
+etc/firmware/modem_f1.b29
+etc/firmware/modem_f1.mdt
+etc/firmware/modem_f2.b00:etc/firmware/modem_fw.b00
+etc/firmware/modem_f2.b01:etc/firmware/modem_fw.b01
+etc/firmware/modem_f2.b02:etc/firmware/modem_fw.b02
+etc/firmware/modem_f2.b03:etc/firmware/modem_fw.b03
+etc/firmware/modem_f2.b04:etc/firmware/modem_fw.b04
+etc/firmware/modem_f2.b05:etc/firmware/modem_fw.b05
+etc/firmware/modem_f2.b06:etc/firmware/modem_fw.b06
+etc/firmware/modem_f2.b07:etc/firmware/modem_fw.b07
+etc/firmware/modem_f2.b08:etc/firmware/modem_fw.b08
+etc/firmware/modem_f2.b09:etc/firmware/modem_fw.b09
+etc/firmware/modem_f2.b10:etc/firmware/modem_fw.b10
+etc/firmware/modem_f2.b13:etc/firmware/modem_fw.b13
+etc/firmware/modem_f2.b14:etc/firmware/modem_fw.b14
+etc/firmware/modem_f2.b21:etc/firmware/modem_fw.b21
+etc/firmware/modem_f2.b22:etc/firmware/modem_fw.b22
+etc/firmware/modem_f2.b23:etc/firmware/modem_fw.b23
+etc/firmware/modem_f2.b25:etc/firmware/modem_fw.b25
+etc/firmware/modem_f2.b26:etc/firmware/modem_fw.b26
+etc/firmware/modem_f2.b29:etc/firmware/modem_fw.b29
+etc/firmware/modem_f2.mdt:etc/firmware/modem_fw.mdt

@@ -1,0 +1,4 @@
+get_prop(bootanim, opengles_prop)
+
+#============= bootanim ==============
+allow bootanim sysfs_thermal:file r_file_perms;

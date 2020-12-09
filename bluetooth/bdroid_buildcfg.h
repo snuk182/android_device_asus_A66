@@ -17,8 +17,13 @@
 #ifndef _BDROID_BUILDCFG_H
 #define _BDROID_BUILDCFG_H
 
-#define BTM_DEF_LOCAL_NAME   "Padfone"
-#define BTA_DISABLE_DELAY 1000 /* in milliseconds */
-#define BLUETOOTH_QTI_SW TRUE
+#pragma push_macro("PROPERTY_VALUE_MAX")
+
+#define BTM_DEF_LOCAL_NAME   "PadFone"
+#define BTA_DISABLE_DELAY 1000
+
+#define SC_MODE_INCLUDED FALSE
+
+#pragma pop_macro("PROPERTY_VALUE_MAX")
 
 #endif

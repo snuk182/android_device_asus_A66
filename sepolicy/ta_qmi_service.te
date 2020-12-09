@@ -1,0 +1,14 @@
+type ta_qmi_service, domain, coredomain;
+type ta_qmi_service_exec, system_file_type, exec_type, file_type;
+
+init_daemon_domain(ta_qmi_service)
+
+unix_socket_connect(ta_qmi_service, tad, tad)
+
+wakelock_use(ta_qmi_service)
+
+#============= ta_qmi_service ==============
+allow ta_qmi_service self:socket create_socket_perms;
+allow ta_qmi_service shared_log_device:chr_file { ioctl open read write };
+allow ta_qmi_service smem_log_device:chr_file rw_file_perms;
+allowxperm ta_qmi_service self:socket ioctl msm_sock_ipc_ioctls;
