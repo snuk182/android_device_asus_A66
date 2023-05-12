@@ -15,16 +15,20 @@
 #
 
 # Board device path
-DEVICE_PATH := device/sony/mint
+DEVICE_PATH := device/asus/A66
+
+# Device display
+TARGET_SCREEN_HEIGHT := 960
+TARGET_SCREEN_WIDTH := 540
 
 # Board device headers
 TARGET_SPECIFIC_HEADER_PATH := $(DEVICE_PATH)/include
 
 # Board common elements
-include device/sony/blue-common/BoardConfigCommon.mk
+include device/asus/msm8960-common/BoardConfigCommon.mk
 
 # Board device elements
 include $(DEVICE_PATH)/board/*.mk
 
 # Board device vendor
--include vendor/sony/mint/BoardConfigVendor.mk
+-include vendor/asus/A66/BoardConfigVendor.mk

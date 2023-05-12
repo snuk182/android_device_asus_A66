@@ -19,7 +19,7 @@
 
 #pragma push_macro("PROPERTY_VALUE_MAX")
 
-#define BTM_DEF_LOCAL_NAME   "Xperia T"
+#define BTM_DEF_LOCAL_NAME   "Padfone One"
 #define BTA_DISABLE_DELAY 1000
 
 #define SC_MODE_INCLUDED FALSE

@@ -17,8 +17,8 @@
 
 # Screen density
 PRODUCT_AAPT_CONFIG := normal
-PRODUCT_AAPT_PREF_CONFIG := xhdpi
-PRODUCT_AAPT_PREBUILT_DPI := xhdpi 280dpi hdpi tvdpi mdpi ldpi
+PRODUCT_AAPT_PREF_CONFIG := hdpi
+PRODUCT_AAPT_PREBUILT_DPI := xhdpi 280dpi hdpi tvdpi mdpi
 
 # Device specific overlays
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
@@ -27,7 +27,7 @@ DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay-lineage
 endif
 
 # Common product elements
-$(call inherit-product, device/sony/blue-common/common.mk)
+$(call inherit-product, device/asus/msm8960-common/common.mk)
 
 # Device product elements
 include $(LOCAL_PATH)/product/*.mk
@@ -36,4 +36,4 @@ include $(LOCAL_PATH)/product/*.mk
 $(call inherit-product, build/target/product/go_defaults.mk)
 
 # Vendor product configurations
-$(call inherit-product, vendor/sony/mint/mint-vendor.mk)
+$(call inherit-product, vendor/asus/A66/A66-vendor.mk)

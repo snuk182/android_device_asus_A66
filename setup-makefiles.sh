@@ -19,8 +19,8 @@
 set -e
 
 # Required!
-export DEVICE_COMMON=blue-common
-export DEVICE=mint
-export VENDOR=sony
+export DEVICE_COMMON=msm8960-common
+export DEVICE=A66
+export VENDOR=asus
 
 ./../$DEVICE_COMMON/setup-makefiles.sh

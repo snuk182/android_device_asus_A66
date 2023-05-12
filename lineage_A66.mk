@@ -22,23 +22,23 @@ TARGET_REDUCES_RINGTONES := true
 $(call inherit-product, vendor/lineage/config/common_mini_go_phone.mk)
 
 # Inherit device configurations
-$(call inherit-product, device/sony/mint/device.mk)
+$(call inherit-product, device/asus/A66/device.mk)
 
 # Device display
-TARGET_SCREEN_HEIGHT := 1280
-TARGET_SCREEN_WIDTH := 720
+TARGET_SCREEN_HEIGHT := 960
+TARGET_SCREEN_WIDTH := 540
 
 # Device identifications
-PRODUCT_DEVICE := mint
-PRODUCT_NAME := lineage_mint
-PRODUCT_BRAND := Sony
-PRODUCT_MANUFACTURER := Sony
-PRODUCT_MODEL := Xperia T
+PRODUCT_DEVICE := A66
+PRODUCT_NAME := lineage_A66
+PRODUCT_BRAND := ASUS
+PRODUCT_MANUFACTURER := ASUS
+PRODUCT_MODEL := PadFone
 
 # Build properties
 PRODUCT_BUILD_PROP_OVERRIDES += \
-    PRODUCT_NAME=LT30p \
-    PRIVATE_BUILD_DESC="LT30p-user 4.3 JB-MR2-BLUE-140313-0947 257 test-keys"
+    PRODUCT_NAME=A66 \
+    PRIVATE_BUILD_DESC="A66-user 4.1.1 JRO03L A66-10.5.1.4-0 release-keys"
 
 # Build fingerprint
-BUILD_FINGERPRINT := Sony/LT30p/LT30p:4.3/9.2.A.1.205/Mvv_tg:user/release-keys
+BUILD_FINGERPRINT := ASUS/A66/PadFone:4.1.1/JRO03L/A66-10.5.1.4-0:user/release-keys

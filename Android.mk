@@ -16,7 +16,7 @@
 
 LOCAL_PATH := $(call my-dir)
 
-ifeq ($(TARGET_DEVICE),mint)
+ifeq ($(TARGET_DEVICE),A66)
 
 include $(call first-makefiles-under,$(LOCAL_PATH))
 

@@ -1,6 +1,4 @@
-#
-# Copyright (C) 2013-2016 The CyanogenMod Project
-#           (C) 2017-2019 The LineageOS Project
+# Copyright (C) 2010 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,12 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/aosp_A66.mk \
-    $(LOCAL_DIR)/lineage_A66.mk
+#
+# Input Device Configuration File for the Atmel Maxtouch touch screen.
+#
+# These calibration values are derived from empirical measurements
+# and may not be appropriate for use with other touch screens.
+# Refer to the input device configuration documentation for more details.
+#
 
-COMMON_LUNCH_CHOICES := \
-    aosp_A66-eng \
-    aosp_A66-userdebug \
-    lineage_A66-eng \
-    lineage_A66-userdebug
+# Basic Parameters
+touch.deviceType = pointer
+touch.orientationAware = 1
+touch.gestureMode = spots
+device.external = 1
+touch.usingJitterFilter = 1
+

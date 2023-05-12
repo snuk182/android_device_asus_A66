@@ -1,6 +1,6 @@
 [
   {
-    "repository": "android_device_sony_blue-common",
-    "target_path": "device/sony/blue-common"
+    "repository": "android_device_asus_msm8960-common",
+    "target_path": "device/asus/msm8960-common"
   }
 ]
