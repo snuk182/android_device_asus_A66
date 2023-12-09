@@ -1,0 +1,31 @@
+# Android fstab file.
+# The filesystem that contains the filesystem checker binary (typically /system) cannot
+# specify MF_CHECK, and must come before any filesystems that do specify MF_CHECK
+
+#TODO: Add 'check' as fs_mgr_flags with data partition.
+# Currently we dont have e2fsck compiled. So fs check would failed.
+
+#<src>                                                <mnt_point>  <type>  <mnt_flags and options>                     <fs_mgr_flags>
+/dev/block/platform/msm_sdcc.1/by-name/modem        /firmware        vfat      ro,nosuid,nodev,context=u:object_r:firmware_file:s0      wait
+#/dev/block/platform/msm_sdcc.1/by-name/sbl1         /sbl1         emmc      defaults      defaults
+#/dev/block/platform/msm_sdcc.1/by-name/sbl2         /sbl2         emmc      defaults      defaults
+#/dev/block/platform/msm_sdcc.1/by-name/sbl3         /sbl3         emmc      defaults      defaults
+#/dev/block/platform/msm_sdcc.1/by-name/tz           /tz           emmc      defaults      defaults
+#/dev/block/platform/msm_sdcc.1/by-name/rpm          /rpm          emmc      defaults      defaults
+#/dev/block/platform/msm_sdcc.1/by-name/aboot        /aboot        emmc      defaults      defaults
+/dev/block/platform/msm_sdcc.1/by-name/boot         /boot         emmc      defaults      defaults
+/dev/block/platform/msm_sdcc.1/by-name/misc         /misc         emmc      defaults      defaults
+/dev/block/platform/msm_sdcc.1/by-name/recovery     /recovery     emmc      defaults      defaults
+/dev/block/platform/msm_sdcc.1/by-name/cache             /cache              ext4      noatime,nosuid,nodev,barrier=1,data=ordered,noauto_da_alloc,errors=panic    wait,check
+/dev/block/platform/msm_sdcc.1/by-name/asusdata          /asusdata           ext4      ro,nosuid,nodev,context=u:object_r:asusdata_file:s0      wait
+/dev/block/platform/msm_sdcc.1/by-name/userdata          /data               ext4      noatime,nosuid,nodev,barrier=1,data=ordered,noauto_da_alloc,errors=panic    wait,check,encryptable=footer
+/dev/block/platform/msm_sdcc.1/by-name/system            /system             ext4      ro,barrier=1                                                                wait,first_stage_mount
+/dev/block/platform/msm_sdcc.1/by-name/persist           /persist            ext4      barrier=1,data=ordered,nodelalloc                              wait
+#/dev/block/bootdevice/by-name/fsg            /fsg                emmc    ro,nosuid,nodev,barrier=0,context=u:object_r:fsg_file:s0             wait
+/dev/block/platform/msm_sdcc.1/by-name/tombstones        /tombstones         ext4      barrier=1,data=ordered,nodelalloc                              wait
+#/data/media	                                         auto                vfat      defaults                                                                    voldmanaged=sdcard0:auto,noemulatedsd
+/devices/platform/msm_sdcc.3/mmc_host                    auto                auto      defaults                                                                voldmanaged=microsd:auto
+/devices/platform/msm_hsusb_host/usb1/1-1/1-1.1/1-1.1.1/ auto                auto      defaults                                                                voldmanaged=usbdisk1:auto
+/devices/platform/msm_hsusb_host/usb1/1-1/1-1.1/1-1.1.2/ auto                auto      defaults                                                                voldmanaged=usbdisk2:auto
+/devices/platform/msm_hsusb_host/usb1/1-1/1-1.1/1-1.1.3/ auto                auto      defaults                                                                voldmanaged=sdreader:auto
+/dev/block/zram0                                         none                swap     defaults                                                                   zramsize=805306368

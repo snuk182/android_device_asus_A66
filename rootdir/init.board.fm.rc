@@ -1,0 +1,15 @@
+on boot
+    chown system system /sys/module/radio_iris_transport/parameters/fmsmd_set
+    chmod 0660 /sys/module/radio_iris_transport/parameters/fmsmd_set
+
+on post-fs-data
+    mkdir /data/misc/fm 0770 system system
+    chmod 0770 /data/misc/fm
+
+service vendor.fm /system/bin/sh /system/etc/init.qcom.fm.sh
+    class late_start
+    user system
+    group system
+    disabled
+    oneshot
+    seclabel u:r:fm_dl:s0

@@ -1,3 +1,140 @@
+# ADSP
+lib/libadsprpc.so
+
+# Audio
+lib/libacdbloader.so
+
+# Bluetooth
+bin/hci_qcomm_init
+
+# Camera
+lib/libmmcamera_hdr_lib.so
+lib/libmmcamera_image_stab.so
+lib/libmmcamera_tintless_algo.so
+lib/libmmcamera_tintless_wrapper.so
+lib/libmmcamera_wavelet_lib.so
+
+# Data
+bin/netmgrd
+lib/libdsi_netctrl.so
+lib/libdsutils.so
+lib/libnetmgr.so
+lib/libqdi.so
+lib/libqdp.so
+
+# Diag
+vendor/lib/libdiag.so
+
+# FM
+bin/fm_qsoc_patches
+
+# GPS
+lib/hw/gps.default.so
+lib/libgps.utils.so
+lib/libloc_api_v02.so
+lib/libloc_core.so
+lib/libloc_ds_api.so
+lib/libloc_eng.so
+vendor/lib/libgeofence.so
+vendor/lib/libizat_core.so
+vendor/lib/liblbs_core.so
+
+# Graphics
+etc/firmware/a225p5_pm4.fw
+etc/firmware/a225_pfp.fw
+etc/firmware/a225_pm4.fw
+etc/firmware/a300_pfp.fw
+etc/firmware/a300_pm4.fw
+etc/firmware/leia_pfp_470.fw
+etc/firmware/leia_pm4_470.fw
+vendor/lib/egl/eglsubAndroid.so
+vendor/lib/egl/libEGL_adreno.so
+vendor/lib/egl/libGLESv1_CM_adreno.so
+vendor/lib/egl/libGLESv2_adreno.so
+vendor/lib/egl/libGLESv2S3D_adreno.so
+vendor/lib/egl/libq3dtools_adreno.so
+vendor/lib/libC2D2.so
+vendor/lib/libCB.so
+vendor/lib/libadreno_utils.so
+vendor/lib/libc2d2_a3xx.so
+vendor/lib/libc2d2_z180.so
+vendor/lib/libgsl.so
+vendor/lib/libllvm-a3xx.so
+vendor/lib/libllvm-arm.so
+vendor/lib/libOpenCL.so
+vendor/lib/libOpenVG.so
+vendor/lib/libsc-a2xx.so
+vendor/lib/libsc-a3xx.so
+
+# MultiMedia
+lib/libgemini.so
+lib/libmmjpeg.so
+lib/libmercury.so
+
+# Perf
+lib/libthermalclient.so
+vendor/lib/libqti-perfd-client.so
+
+# Protocol Buffers
+lib/libprotobuf-c.so
+
+# QCRIL
+lib/libril-qc-qmi-1.so
+
+# QMI
+bin/irsc_util
+bin/qmuxd
+lib/libidl.so
+lib/libqcci_legacy.so
+lib/libqmi.so
+lib/libqmi_client_qmux.so
+lib/libqmiservices.so
+vendor/lib/libqmi_cci.so
+vendor/lib/libqmi_common_so.so
+vendor/lib/libqmi_csi.so
+vendor/lib/libqmi_encdec.so
+
+# RemoteFS
+bin/rmt_storage
+
+# Security
+bin/secchand
+lib/lib_asb_tee.so
+lib/libQSEEComAPI.so
+lib/libidd.so
+lib/libkeyctrl.so
+lib/libpin-cache.so
+lib/libs1sl.so
+
+# STLport
+vendor/lib/libstlport.so
+
+# Time services
+-vendor/lib/libtime_genoff.so
+
+# UI
+vendor/lib/libuiblur.so
+
+# VIDC firmware
+etc/firmware/vidc.b00
+etc/firmware/vidc.b01
+etc/firmware/vidc.b02
+etc/firmware/vidc.b03
+etc/firmware/vidc.mdt
+etc/firmware/vidc_1080p.fw
+etc/firmware/vidcfw.elf
+
+# Widevine DRM
+vendor/lib/mediadrm/libwvdrmengine.so|66ba66d047044f92eb0eada1faf6a5799ded90ab|2f70d96729bc35389d98ab3a1e8f48f4f7b659c2
+
+# WiFi Firmware
+etc/firmware/wcnss.b00
+etc/firmware/wcnss.b01
+etc/firmware/wcnss.b02
+etc/firmware/wcnss.b04
+etc/firmware/wcnss.b05
+etc/firmware/wcnss.mdt
+
 # Modem Firmware
 etc/firmware/modem.b00
 etc/firmware/modem.b01

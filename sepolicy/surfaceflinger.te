@@ -1,0 +1,4 @@
+get_prop(surfaceflinger, opengles_prop)
+
+#============= surfaceflinger ==============
+allow surfaceflinger sysfs_thermal:file { getattr open read };

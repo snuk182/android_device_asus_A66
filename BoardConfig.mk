@@ -24,10 +24,8 @@ TARGET_SCREEN_WIDTH := 540
 # Board device headers
 TARGET_SPECIFIC_HEADER_PATH := $(DEVICE_PATH)/include
 
-# Board common elements
-include device/asus/msm8960-common/BoardConfigCommon.mk
-
 # Board device elements
+include $(DEVICE_PATH)/PlatformConfig.mk
 include $(DEVICE_PATH)/board/*.mk
 
 # Board device vendor

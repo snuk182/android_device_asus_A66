@@ -1,0 +1,11 @@
+type pre_hw_config, domain, coredomain;
+type pre_hw_config_exec, exec_type, file_type;
+
+init_daemon_domain(pre_hw_config)
+
+#============= pre_hw_config ==============
+allow pre_hw_config shell_exec:file { entrypoint getattr read };
+allow pre_hw_config sysfs_als:file { open write };
+allow pre_hw_config sysfs_leds:dir search;
+allow pre_hw_config sysfs_leds:file { open write };
+allow pre_hw_config sysfs_leds:lnk_file read;

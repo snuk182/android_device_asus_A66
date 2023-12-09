@@ -1,0 +1,26 @@
+#============= init ==============
+allow init camera_data_file:file getattr;
+allow init debugfs:dir mounton;
+allow init functionfs:dir mounton;
+allow init qti_debugfs:dir relabelfrom;
+allow init qti_debugfs:file relabelfrom;
+allow init sysfs_batteryinfo:file { open setattr write };
+allow init sysfs_block_iosched:file write;
+allow init sysfs_bluetooth_control:file setattr;
+allow init sysfs_camera_torch:file setattr;
+allow init sysfs_cpu_boost:file { open setattr write };
+allow init sysfs_devices_system_cpu:file write;
+allow init sysfs_disk_polling:file { setattr write };
+allow init sysfs_fm:file setattr;
+allow init sysfs_leds:file setattr;
+allow init sysfs_mhl:file setattr;
+allow init sysfs_power_control:file { open write };
+allow init sysfs_proximity_sensor:file setattr;
+allow init sysfs_sensors:file setattr;
+allow init sysfs_graphics:file setattr;
+allow init sysfs_thermal:file { open setattr write };
+allow init sysfs_thermal_control:file { open write };
+allow init sysfs_usb:file write;
+allow init sysfs_wcnss_ssr:file { open setattr write };
+allow init sysfs_wlan_fwpath:file setattr;
+allow init wlan_device:chr_file write;

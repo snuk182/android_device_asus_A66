@@ -18,9 +18,72 @@
 
 set -e
 
+# Abort if device not inherited
+if  [ -z "$DEVICE" ]; then
+    echo "Variable DEVICE not defined, aborting..."
+    exit 1
+fi
+
 # Required!
-export DEVICE_COMMON=msm8960-common
 export DEVICE=A66
 export VENDOR=asus
 
-./../$DEVICE_COMMON/extract-files.sh $@
+# Load extract_utils and do some sanity checks
+MY_DIR="${BASH_SOURCE%/*}"
+if [[ ! -d "$MY_DIR" ]]; then MY_DIR="$PWD"; fi
+
+LINEAGE_ROOT="$MY_DIR"/../../..
+
+HELPER="$LINEAGE_ROOT"/vendor/lineage/build/tools/extract_utils.sh
+if [ ! -f "$HELPER" ]; then
+    echo "Unable to find helper script at $HELPER"
+    exit 1
+fi
+. "$HELPER"
+
+# Default to sanitizing the vendor folder before extraction
+CLEAN_VENDOR=true
+
+while [ "$1" != "" ]; do
+    case $1 in
+        -n | --no-cleanup )     CLEAN_VENDOR=false
+                                ;;
+        -s | --section )        shift
+                                SECTION=$1
+                                CLEAN_VENDOR=false
+                                ;;
+        * )                     SRC=$1
+                                ;;
+    esac
+    shift
+done
+
+if [ -z "$SRC" ]; then
+    SRC=adb
+fi
+
+function blob_fixup() {
+    case "${1}" in
+    vendor/lib/mediadrm/libwvdrmengine.so)
+        "${PATCHELF}" --replace-needed libprotobuf-cpp-lite.so libprotobuf-cpp-lite-v29.so "${2}"
+        ;;
+    esac
+}
+
+# Sony/Board specific blobs
+extract "$MY_DIR"/proprietary-files-asus.txt "$SRC" "$SECTION"
+
+# QCom common board blobs
+extract "$MY_DIR"/proprietary-files-qc.txt "$SRC" "$SECTION"
+
+# Generate vendor makefiles
+"$MY_DIR"/setup-makefiles.sh
+
+# Reinitialize the helper for device
+setup_vendor "$DEVICE" "$VENDOR" "$LINEAGE_ROOT" false "$CLEAN_VENDOR"
+
+# Sony/Device specific blobs
+extract "$MY_DIR"/../$DEVICE/proprietary-files-asus.txt "$SRC" "$SECTION"
+
+# QCom common device blobs
+extract "$MY_DIR"/../$DEVICE/proprietary-files-qc.txt "$SRC" "$SECTION"

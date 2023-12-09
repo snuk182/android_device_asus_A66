@@ -1,0 +1,17 @@
+#============= hal_sensors_default ==============
+allow hal_sensors_default mpu_device:chr_file rw_file_perms;
+allow hal_sensors_default sysfs_als:file rw_file_perms;
+allow hal_sensors_default sysfs_bus_i2c:dir { open read search };
+allow hal_sensors_default sysfs_bus_i2c:lnk_file read;
+allow hal_sensors_default sysfs_camera_torch:dir search;
+allow hal_sensors_default sysfs_camera_torch:file { open read };
+allow hal_sensors_default sysfs_i2c_name:file { open read };
+allow hal_sensors_default sysfs_input_devices:dir { open read search };
+allow hal_sensors_default sysfs_input_devices:file { open read };
+allow hal_sensors_default sysfs_proximity_sensor:dir search;
+allow hal_sensors_default sysfs_proximity_sensor:file { open read write };
+allow hal_sensors_default sysfs_sensors:file { getattr open read write };
+allow hal_sensors_default sysfs_system_soc:file { read };
+allow hal_sensors_default system_data_file:dir { add_name write };
+allow hal_sensors_default system_data_file:file { create getattr open read write };
+allow hal_sensors_default system_lib_file:file execmod;

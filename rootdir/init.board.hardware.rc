@@ -1,0 +1,100 @@
+on early-boot
+    write /sys/module/pm8921_charger/parameters/enable_lowbatt_detect 1
+
+    # Run pre_hw_config.sh before entering charge only mode.
+    start pre_hw_config
+
+on boot
+    # Clock
+    chmod 660 /dev/rtc0
+    chown system system /dev/rtc0
+
+    # Graphics permissions
+    chown system graphics /sys/class/graphics/fb1/hpd
+    chown system graphics /sys/class/graphics/fb1/vendor_name
+    chown system graphics /sys/class/graphics/fb1/product_description
+    chmod 0664 /sys/class/graphics/fb1/hpd
+    chmod 0664 /sys/class/graphics/fb1/vendor_name
+    chmod 0664 /sys/class/graphics/fb1/product_description
+    chmod 0664 /sys/class/graphics/fb1/video_mode
+    chmod 0664 /sys/class/graphics/fb1/format_3d
+
+    # Graphics fps_level nodes
+    chown system graphics /sys/class/graphics/fb0/msm_fb_fps_level
+    chown system graphics /sys/class/graphics/fb1/msm_fb_fps_level
+    chown system graphics /sys/class/graphics/fb2/msm_fb_fps_level
+    chmod 644 /sys/class/graphics/fb0/msm_fb_fps_level
+    chmod 400 /sys/class/graphics/fb1/msm_fb_fps_level
+    chmod 400 /sys/class/graphics/fb2/msm_fb_fps_level
+
+    # GPS
+    mkdir /dev/socket/qmux_gps 0770 gps gps
+    chmod 2770 /dev/socket/qmux_gps
+
+    # LM3560 camera light
+# todo
+
+    # Port-bridge
+    chmod 0660 /dev/smd0
+    chown system system /dev/smd0
+
+    # Proximity sensor
+# todo
+
+    # Vibrator
+    chown root system /sys/class/timed_output/vibrator/level
+    chmod 0664 /sys/class/timed_output/vibrator/level
+    restorecon /sys/class/timed_output/vibrator/level
+
+    # LSM330D sensor
+# todo
+
+    # HDMI output
+    symlink /dev/graphics/fb1 /dev/graphics/hdmi
+
+    # USB power supply
+    chmod 0640 /sys/class/power_supply/usb/current_max
+
+service thermanager /vendor/bin/thermanager /system/etc/thermanager.xml
+    class main
+    user root
+    group root system
+
+service qseecomd /system/bin/qseecomd
+   class late_start
+   user system
+   group system
+
+service hw_config /system/bin/sh /system/etc/hw_config.sh
+    class main
+    user root
+    group root system wakelock
+    oneshot
+    seclabel u:r:hw_config:s0
+
+service pre_hw_config /system/bin/sh /system/etc/pre_hw_config.sh
+    class main
+    user root
+    group root camera system
+    oneshot
+    seclabel u:r:pre_hw_config:s0
+
+service irsc_util /system/bin/irsc_util "/vendor/etc/sec_config"
+    class main
+    user root
+    oneshot
+    seclabel u:r:irsc_util:s0
+
+service secchand /system/bin/secchand
+    user root
+    group root drmrpc system
+    class core
+    seclabel u:r:secchand:s0
+
+# Override sensors HAL service
+service vendor.sensors-hal-1-0 /vendor/bin/hw/android.hardware.sensors@1.0-service
+    class hal
+    user system
+    group system input wakelock uhid
+    capabilities BLOCK_SUSPEND
+    rlimit rtprio 10 10

@@ -1,0 +1,23 @@
+type hw_config, domain, coredomain;
+type hw_config_exec, exec_type, file_type;
+
+init_daemon_domain(hw_config)
+
+unix_socket_connect(hw_config, tad, tad)
+
+#============= hw_config ==============
+allow hw_config firmware_file:dir search;
+allow hw_config firmware_file:file { open read };
+allow hw_config shell_exec:file { entrypoint getattr read };
+allow hw_config sysfs:file { getattr open write };
+allow hw_config sysfs_als:file { open write };
+allow hw_config sysfs_bus_i2c:dir search;
+allow hw_config sysfs_bus_i2c:lnk_file read;
+allow hw_config sysfs_proximity_sensor:dir search;
+allow hw_config sysfs_proximity_sensor:file { open write };
+allow hw_config sysfs_rmi4:dir { open read search };
+allow hw_config sysfs_rmi4:file { getattr open read write };
+allow hw_config sysfs_rmi4:lnk_file { getattr read };
+allow hw_config sysfs_wake_lock:file { open write };
+allow hw_config system_file:file execute_no_trans;
+allow hw_config toolbox_exec:file { execute execute_no_trans getattr open read };
