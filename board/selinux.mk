@@ -1,6 +1,3 @@
-# SELinux configurations
-SELINUX_IGNORE_NEVERALLOWS := true
-
 # QCOM legacy sepolicies
 include device/qcom/sepolicy-legacy/sepolicy.mk
 

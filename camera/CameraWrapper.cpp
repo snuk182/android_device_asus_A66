@@ -39,28 +39,6 @@
 
 using namespace android;
 
-// Wrapper specific parameters names
-static const char KEY_SUPPORTED_ISO_MODES[] = "iso-values";
-static const char KEY_ISO_MODE[] = "iso";
-
-// Wrapper Sony specific parameters names
-static const char KEY_SONY_IMAGE_STABILISER_VALUES[] = "sony-is-values";
-static const char KEY_SONY_IMAGE_STABILISER[] = "sony-is";
-static const char KEY_SONY_VIDEO_STABILISER[] = "sony-vs";
-static const char KEY_SONY_VIDEO_STABILISER_VALUES[] = "sony-vs-values";
-static const char KEY_SONY_VIDEO_HDR[] = "sony-video-hdr";
-static const char KEY_SONY_VIDEO_HDR_VALUES[] = "sony-video-hdr-values";
-static const char KEY_SONY_ISO_AVAIL_MODES[] = "sony-iso-values";
-static const char KEY_SONY_ISO_MODE[] = "sony-iso";
-static const char KEY_SONY_AE_MODE_VALUES[] = "sony-ae-mode-values";
-static const char KEY_SONY_AE_MODE[] = "sony-ae-mode";
-
-// Wrapper Sony specific parameters values
-static const char VALUE_SONY_ON[] = "on";
-static const char VALUE_SONY_OFF[] = "off";
-static const char VALUE_SONY_STILL_HDR[] = "on-still-hdr";
-static const char VALUE_SONY_INTELLIGENT_ACTIVE[] = "on-intelligent-active";
-
 static Mutex gCameraWrapperLock;
 static camera_module_t *gVendorModule = 0;
 
@@ -88,7 +66,7 @@ camera_module_t HAL_MODULE_INFO_SYM = {
          .module_api_version = CAMERA_MODULE_API_VERSION_1_0,
          .hal_api_version = HARDWARE_HAL_API_VERSION,
          .id = CAMERA_HARDWARE_MODULE_ID,
-         .name = "Xperia Camera Wrapper",
+         .name = "ASUS Camera Wrapper",
          .author = "The LineageOS Project",
          .methods = &camera_module_methods,
          .dso = NULL, /* remove compilation warnings */
@@ -159,194 +137,58 @@ static int check_vendor_module()
     return rv;
 }
 
-void camera_fixup_capability(CameraParameters *params)
-{
-    ALOGV("%s", __FUNCTION__);
-
-    if (params->get(
-            KEY_SONY_IMAGE_STABILISER_VALUES)) {
-        const char *supportedIsModes = params->get(
-                KEY_SONY_IMAGE_STABILISER_VALUES);
-
-        if (strstr(supportedIsModes, VALUE_SONY_STILL_HDR) != NULL) {
-            char buffer[512];
-            const char *supportedSceneModes = params->get(
-                    CameraParameters::KEY_SUPPORTED_SCENE_MODES);
-            sprintf(buffer, "%s,hdr", supportedSceneModes);
-            params->set(CameraParameters::KEY_SUPPORTED_SCENE_MODES,
-                    buffer);
-        }
-    }
-}
-
 static char *camera_fixup_getparams(int id, const char *settings)
 {
-    CameraParameters params;
-    params.unflatten(String8(settings));
+    android::CameraParameters params;
+    params.unflatten(android::String8(settings));
 
-#if !LOG_NDEBUG && defined(LOG_PARAMETERS)
+#if !LOG_NDEBUG
     ALOGV("%s: original parameters:", __FUNCTION__);
     params.dump();
 #endif
 
-    camera_fixup_capability(&params);
+    /* Face detection */
+    params.set(android::CameraParameters::KEY_MAX_NUM_DETECTED_FACES_HW, "0");
+    params.set(android::CameraParameters::KEY_MAX_NUM_DETECTED_FACES_SW, "0");
 
-    // Set preferred video preview size
-    if (id == 0) {
-        params.set(CameraParameters::KEY_PREFERRED_PREVIEW_SIZE_FOR_VIDEO, "1280x720");
-    } else {
-        params.set(CameraParameters::KEY_PREFERRED_PREVIEW_SIZE_FOR_VIDEO, "640x480");
+#ifdef CAMERA_FRONT_VGA
+    if (id == CAMERA_FACING_FRONT) {
+        params.set(android::CameraParameters::KEY_SUPPORTED_PREVIEW_SIZES,
+                "640x480,640x384,640x368,576x432,480x320,384x288,352x288,320x240,240x160,176x144");
     }
+#endif
 
-    if (params.get(KEY_SONY_ISO_AVAIL_MODES)) {
-        // fixup the iso mode list with those that are in the sony list
-        const char *isoModeList = params.get(KEY_SONY_ISO_AVAIL_MODES);
-        char buffer[255] = "ISO";
-        size_t bufferPos = 3;
-        for (size_t pos = 0; pos < strlen(isoModeList); pos++) {
-            if (isoModeList[pos] != ',') {
-                buffer[bufferPos++] = isoModeList[pos];
-            } else {
-                strcat(buffer, ",ISO");
-                bufferPos += 4;
-            }
-        }
-        strcat(buffer, ",auto");
-        params.set(KEY_SUPPORTED_ISO_MODES, buffer);
-    }
-
-    if (params.get(KEY_SONY_IMAGE_STABILISER)) {
-        const char *sony_is = params.get(KEY_SONY_IMAGE_STABILISER);
-        if (strcmp(sony_is, VALUE_SONY_STILL_HDR) == 0) {
-            // Scene mode is HDR then (see fixup_setparams)
-            params.set(CameraParameters::KEY_SCENE_MODE, "hdr");
-        }
-    }
-
-    if (params.get(KEY_SONY_VIDEO_HDR) &&
-            params.get(KEY_SONY_VIDEO_HDR_VALUES)) {
-        params.set("video-hdr-values", params.get(KEY_SONY_VIDEO_HDR_VALUES));
-        params.set("video-hdr", params.get(KEY_SONY_VIDEO_HDR));
-    }
-
-    if (params.get(KEY_SONY_ISO_MODE)) {
-        if (params.get(KEY_SONY_AE_MODE_VALUES)) {
-            const char *aeMode = params.get(KEY_SONY_AE_MODE);
-            if (strcmp(aeMode, "auto") == 0 ) {
-                params.set(KEY_ISO_MODE, "auto");
-                params.set("shutter-speed", "auto");
-            } else if (strcmp(aeMode, "iso-prio") == 0) {
-                char *isoVal = (char*)malloc(sizeof(char) * (3 + strlen(
-                        params.get(KEY_SONY_ISO_MODE))));
-                sprintf(isoVal, "ISO%s", params.get(KEY_SONY_ISO_MODE));
-                params.set(KEY_ISO_MODE, isoVal);
-                params.set("shutter-speed", "auto");
-            } else if (strcmp(aeMode, "shutter-prio") == 0) {
-                params.set(KEY_ISO_MODE, "auto");
-                const char *shutterSpeed = params.get("sony-shutter-speed");
-                if (shutterSpeed) {
-                    params.set("shutter-speed",shutterSpeed);
-                }
-            } else if (strcmp(aeMode, "manual") == 0) {
-                const char *shutterSpeed = params.get("sony-shutter-speed");
-                if (shutterSpeed) {
-                    params.set("shutter-speed",shutterSpeed);
-                }
-                char *isoVal = (char*)malloc(sizeof(char) * (3 + strlen(
-                        params.get(KEY_SONY_ISO_MODE))));
-                sprintf(isoVal, "ISO%s" ,params.get(KEY_SONY_ISO_MODE));
-                params.set(KEY_ISO_MODE, isoVal);
-            } else {
-                params.set(KEY_ISO_MODE, "auto");
-                params.set("shutter-speed", "auto");
-            }
-        }
-    }
-
-    String8 strParams = params.flatten();
-    char *ret = strdup(strParams.string());
-
-    ALOGV("%s: get parameters fixed up", __FUNCTION__);
-    return ret;
-}
-
-static char *camera_fixup_setparams(int __attribute__((unused)) id,
-        const char *settings)
-{
-    CameraParameters params;
-    params.unflatten(String8(settings));
-
-    const char *shutterSpeed = params.get("shutter-speed");
-    if (shutterSpeed) {
-        if (strcmp(shutterSpeed, "auto") != 0) {
-            params.set("sony-shutter-speed", shutterSpeed);
-            params.set(KEY_SONY_AE_MODE, "shutter-prio");
-        } else {
-            const char *aeModes = params.get(KEY_SONY_AE_MODE_VALUES);
-            if (strstr(aeModes, "auto") != NULL) {
-                params.set(KEY_SONY_AE_MODE, "auto");
-            }
-        }
-    }
-
-    if (params.get(KEY_ISO_MODE)) {
-        const char *isoMode = params.get(KEY_ISO_MODE);
-        if (strcmp(isoMode, "auto") != 0) {
-            params.set(KEY_SONY_ISO_MODE, isoMode + 3);
-        }
-        if (params.get(KEY_SONY_AE_MODE_VALUES)) {
-            const char *aeModes = params.get(KEY_SONY_AE_MODE_VALUES);
-            if (strcmp(isoMode, "auto") == 0) {
-                if ((strstr(aeModes, "auto") != NULL) && (strcmp(params.get(
-                        KEY_SONY_AE_MODE), "shutter-prio") != 0)) {
-                    params.set(KEY_SONY_AE_MODE, "auto");
-                }
-            } else if (strstr(aeModes, "iso-prio") != NULL) {
-                if (strcmp(params.get(KEY_SONY_AE_MODE),
-                        "shutter-prio") == 0) {
-                    params.set(KEY_SONY_AE_MODE, "manual");
-                } else {
-                    params.set(KEY_SONY_AE_MODE, "iso-prio");
-                }
-            }
-        }
-    }
-
-    if (params.get(CameraParameters::KEY_SCENE_MODE)) {
-        const char *sceneMode = params.get(
-                CameraParameters::KEY_SCENE_MODE);
-        if (strcmp(sceneMode, "hdr") == 0) {
-            params.set(KEY_SONY_IMAGE_STABILISER, VALUE_SONY_STILL_HDR);
-            params.set(CameraParameters::KEY_SCENE_MODE,
-                    CameraParameters::SCENE_MODE_AUTO);
-        } else {
-            params.set(KEY_SONY_IMAGE_STABILISER, VALUE_SONY_ON);
-        }
-    }
-
-    if (params.get(KEY_SONY_VIDEO_HDR) && params.get("video-hdr")) {
-        params.set(KEY_SONY_VIDEO_HDR, params.get("video-hdr"));
-    }
-
-    if (params.get(CameraParameters::KEY_RECORDING_HINT) &&
-            strcmp(params.get(CameraParameters::KEY_RECORDING_HINT),
-            CameraParameters::TRUE) == 0) {
-        if (params.get(KEY_SONY_VIDEO_STABILISER_VALUES) &&
-                (strstr(params.get(KEY_SONY_VIDEO_STABILISER_VALUES),
-                    VALUE_SONY_INTELLIGENT_ACTIVE) != NULL) ) {
-            params.set(KEY_SONY_VIDEO_STABILISER,
-                    VALUE_SONY_INTELLIGENT_ACTIVE);
-        } else {
-            params.set(KEY_SONY_VIDEO_STABILISER, VALUE_SONY_OFF);
-        }
-        params.set(KEY_SONY_IMAGE_STABILISER, VALUE_SONY_OFF);
-    }
-
-#if defined(LOG_PARAMETERS)
+#if !LOG_NDEBUG
+    ALOGV("%s: fixed parameters:", __FUNCTION__);
     params.dump();
 #endif
 
-    String8 strParams = params.flatten();
+    android::String8 strParams = params.flatten();
+    char *ret = strdup(strParams.string());
+
+    return ret;
+}
+
+static char *camera_fixup_setparams(int id, const char *settings)
+{
+    android::CameraParameters params;
+    params.unflatten(android::String8(settings));
+
+#if !LOG_NDEBUG
+    ALOGV("%s: original parameters:", __FUNCTION__);
+    params.dump();
+#endif
+
+    /* Face detection */
+    params.set(android::CameraParameters::KEY_MAX_NUM_DETECTED_FACES_HW, "0");
+    params.set(android::CameraParameters::KEY_MAX_NUM_DETECTED_FACES_SW, "0");
+
+#if !LOG_NDEBUG
+    ALOGV("%s: fixed parameters:", __FUNCTION__);
+    params.dump();
+#endif
+
+    android::String8 strParams = params.flatten();
     char *ret = strdup(strParams.string());
 
     ALOGV("%s: fixed parameters:", __FUNCTION__);

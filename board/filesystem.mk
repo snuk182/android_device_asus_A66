@@ -15,7 +15,7 @@ TARGET_USERIMAGES_USE_F2FS := true
 BOARD_FLASH_BLOCK_SIZE := 131072
 
 # Root extra symlinks
-BOARD_ROOT_EXTRA_FOLDERS := firmware persist fsg asusdata
+BOARD_ROOT_EXTRA_FOLDERS := firmware fsg asusdata
 BOARD_ROOT_EXTRA_SYMLINKS := /data/tombstones:/tombstones
 DONT_DEXPREOPT_PREBUILTS := true
 WITH_DEXPREOPT := false

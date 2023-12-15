@@ -20,3 +20,9 @@ TARGET_NO_RADIOIMAGE := true
 
 # Binder API
 TARGET_USES_64_BIT_BINDER := true
+
+# RPC
+TARGET_NO_RPC := true
+
+# Secure Services
+BOARD_USES_SECURE_SERVICES := true

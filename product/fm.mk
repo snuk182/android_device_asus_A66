@@ -4,5 +4,4 @@ PRODUCT_PACKAGES += \
 
 # FM properties
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.vendor.fm.use_audio_session=true \
-    vendor.hw.fm.internal_antenna=true
+    ro.vendor.fm.use_audio_session=true
